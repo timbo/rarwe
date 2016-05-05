@@ -2,8 +2,10 @@
   <ul class="list-group songs">
     {{#unless songCreationStarted}}
       <li class="list-group-item">
-        {{input type="text" class="new-song" placeholder="New song" value=title}}
-        <button class="btn btn-primary btn-sm new-song-button" {{action "createSong"}}>Add</button>
+        <form class="new-song-form" {{action "createSong" on="submit"}}>
+         {{input type="text" class="new-song" placeholder="New song" value=title}}
+         <button type="submit" class="btn btn-primary btn-sm new-song-button">Add</button>
+        </form>
       </li>
     {{/unless}}
     {{#each model.songs as |song|}}
@@ -12,12 +14,12 @@
         {{star-rating item=song rating=song.rating setAction="updateRating"}}
       </li>
     {{/each}}
-    {{#if noSongs}}
+    {{#unless createSong}}
       <li class="list-group-item empty-list">
         <div class="empty-message">
           There are no songs yet. Why don't you <a href="#" {{action "enableSongCreation"}}>create one?</a>
         </div>
       </li>
-    {{/if}}
+    {{/unless}}
   </ul>
 </div>
